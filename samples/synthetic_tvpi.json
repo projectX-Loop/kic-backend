@@ -1,0 +1,13 @@
+{
+  "synthetic": true,
+  "fund": "Synthetic PE Fund",
+  "as_of_date": "2026-03-31",
+  "calculation_basis": "net_of_fees",
+  "currency": "USD",
+  "scale": "1000000",
+  "cumulative_distributions": "30",
+  "residual_value": "90",
+  "cumulative_contributions": "100",
+  "disclosed_tvpi": "1.20",
+  "expected_recalculated_tvpi": "1.2"
+}

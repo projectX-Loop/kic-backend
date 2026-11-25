@@ -1,0 +1,1 @@
+"""KIC backend application package."""

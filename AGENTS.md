@@ -17,6 +17,13 @@
 - 구현 전에 관련 명세와 기존 코드를 확인한다. 결과나 데이터 계약에 영향을 주는 미정 사항은 명시하고, 실제 표본이 필요한 결정은 표본 확인까지 보류한다.
 - 요청한 동작을 검증할 수 있는 범위로 변경을 제한한다. 관련 없는 리팩터링과 새 의존성 도입은 별도 변경으로 다룬다.
 
+## 진입점
+
+- FastAPI 진입점은 `app/main.py`의 `app`이다. Python 버전과 설치·실행·확인 명령은 [README의 로컬 실행](README.md#로컬-실행)에 정리한다.
+- 기본 의존성은 `uv sync --locked`로 설치하고, 배포용 wheel은 `uv build --wheel`로 빌드한다.
+- 예제 테스트는 `tests/test_health.py`다. 개별 실행은 `uv run --locked pytest tests/test_health.py`, 전체 실행은 `uv run --locked pytest`를 사용한다.
+- 합성 TVPI 입력과 기대값 예시는 `samples/synthetic_tvpi.json`에 둔다.
+
 ## 커밋과 PR
 
 - 커밋 생성에는 [smart-commit](.agents/skills/smart-commit/SKILL.md)을, PR 생성에는 [smart-pr](.agents/skills/smart-pr/SKILL.md)을 사용한다. 원격 푸시는 사용자가 직접 수행한다.

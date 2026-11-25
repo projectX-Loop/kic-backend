@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kic-backend"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+dependencies = ["fastapi>=0.165,<1", "uvicorn>=0.54,<1"]
+
+[project.optional-dependencies]
+extraction = ["paddleocr>=3,<4", "paddlepaddle>=3.3.1,<4", "pypdf>=6,<7"]
+postgres = ["psycopg[binary]>=3.3,<4"]
+reporting = ["langgraph>=1,<2"]
+
+[dependency-groups]
+dev = ["httpx2>=2.16.2,<3", "pytest>=9.2,<10"]
+
+[tool.uv]
+required-version = ">=0.13.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+include = ["app", "app.*", "db", "db.*", "extraction", "extraction.*", "reporting", "reporting.*", "retrieval", "retrieval.*", "validation", "validation.*"]
+namespaces = false
