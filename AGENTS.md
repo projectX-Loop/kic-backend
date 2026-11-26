@@ -23,6 +23,8 @@
 - 기본 의존성은 `uv sync --locked`로 설치하고, 배포용 wheel은 `uv build --wheel`로 빌드한다.
 - 예제 테스트는 `tests/test_health.py`다. 개별 실행은 `uv run --locked pytest tests/test_health.py`, 전체 실행은 `uv run --locked pytest`를 사용한다.
 - 합성 TVPI 입력과 기대값 예시는 `samples/synthetic_tvpi.json`에 둔다.
+- 보고서 작성 에이전트는 `reporting/`이다. LangGraph는 `uv sync --locked --extra reporting`으로 설치한다. 합성 데이터·가짜 LLM 시나리오는 `uv run --locked --extra reporting python -m reporting.run --all`로 실행하고, 로그는 실행 위치의 `logs/`(`REPORTING_LOG_DIR`로 변경)에 남는다.
+- 보고서 시나리오 테스트는 `tests/test_reporting_scenarios.py`다. 개별 실행은 `uv run --locked --extra reporting pytest tests/test_reporting_scenarios.py`를 사용한다. `reporting` extra가 없으면 건너뛴다.
 
 ## 커밋과 PR
 

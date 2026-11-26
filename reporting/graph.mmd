@@ -1,0 +1,46 @@
+%%{init: {"flowchart": {"curve": "basis", "nodeSpacing": 50, "rankSpacing": 50}}}%%
+flowchart TD
+    __start__(("시작"))
+    start("<b>대화 시작</b>")
+    understand("<b>양식·요청 이해</b>")
+    planner("<b>작업 계획</b>")
+    plan_checker("<b>계획 검사</b>")
+    executor("<b>실행기</b><br/>툴 루프 (작업당 최대 6회)")
+    progress_judge("<b>진행 판단</b>")
+    replanner("<b>재계획</b>")
+    composer("<b>보고서 작성</b><br/>이름표 → 코드가 값 채움")
+    report_checker("<b>보고서 검사</b>")
+    human_review(["<b>담당자 확인</b><br/>interrupt ⏸"])
+    commit("<b>기록 확정</b>")
+    __end__(("끝"))
+    __start__ ==> start
+    start ==> understand
+    understand -.->|"정상"| planner
+    understand -.->|"작성 보류 · LLM 실패"| commit
+    planner -.->|"정상"| plan_checker
+    planner -.->|"LLM 실패 → 실패 기록"| commit
+    plan_checker -.->|"첫 계획 위반 · 1회 다시"| planner
+    plan_checker -.->|"통과"| executor
+    plan_checker -.->|"재계획 위반 → 미완 표시"| composer
+    plan_checker -.->|"다시 짜도 위반 → 작성 보류"| commit
+    executor -.->|"정상"| progress_judge
+    executor -.->|"실패 → 미완 표시"| composer
+    progress_judge -.->|"계속"| executor
+    progress_judge -.->|"재계획 (최대 2회)"| replanner
+    progress_judge -.->|"종료 · 한도(미완 표시)"| composer
+    replanner -.->|"정상"| plan_checker
+    replanner -.->|"실패 → 미완 표시"| composer
+    composer ==> report_checker
+    report_checker -.->|"위반 · 1회 재작성"| composer
+    report_checker -.->|"통과 → 항상 확인"| human_review
+    human_review -.->|"잘못된 응답"| human_review
+    human_review -.->|"승인·반려"| commit
+    commit ==> __end__
+    classDef llm fill:#e3edff,stroke:#3b6fd4,stroke-width:1.5px,color:#14213d
+    classDef code fill:#e6f4ea,stroke:#3c8a4f,stroke-width:1.5px,color:#14213d
+    classDef human fill:#fff1dc,stroke:#d0821c,stroke-width:2px,color:#14213d
+    classDef term fill:#f1f1f1,stroke:#8a8a8a,color:#333
+    class understand,planner,executor,progress_judge,replanner,composer llm
+    class start,plan_checker,report_checker,commit code
+    class human_review human
+    class __start__,__end__ term
